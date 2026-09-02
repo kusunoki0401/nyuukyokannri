@@ -1318,6 +1318,99 @@
     </div>
   </div>
 
+
+  <!-- ===== 判定会議用 印刷プレビューモーダル ===== -->
+  <div id="modal-print" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs hidden items-center justify-center p-3 overflow-y-auto no-print-bg">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[94vh] flex flex-col overflow-hidden border border-slate-200">
+      <div class="px-5 py-3 bg-slate-800 text-white flex items-center justify-between flex-shrink-0 no-print">
+        <span class="font-bold text-xs flex items-center">
+          <i data-lucide="file-text" class="w-3.5 h-3.5 mr-1.5 text-emerald-400"></i>
+          入居判定会議 資料シート（印刷プレビュー）
+        </span>
+        <div class="flex items-center space-x-2">
+          <button onclick="window.print()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-xs flex items-center">
+            <i data-lucide="printer" class="w-3 h-3 mr-1"></i>
+            印刷 / PDF保存
+          </button>
+          <button onclick="closePrintModal()" class="text-slate-400 hover:text-white p-1">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 印刷用 A4 シートエリア -->
+      <div id="print-area" class="flex-1 overflow-y-auto p-6 bg-white text-slate-900 text-xs font-sans">
+        <div class="border-b-2 border-slate-900 pb-2 mb-3 flex justify-between items-end">
+          <div>
+            <span class="text-[10px] text-slate-500">介護付き有料老人ホームくすの木 入居判定委員会</span>
+            <h2 class="text-lg font-black tracking-tight text-slate-900">入居検討者 事前判定サマリー</h2>
+          </div>
+          <div class="text-right text-[10px] text-slate-500" id="print-date"></div>
+        </div>
+
+        <table class="w-full border-collapse border border-slate-400 mb-3 text-xs">
+          <tr>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left w-24">氏名</th>
+            <td class="border border-slate-400 p-2 font-bold text-sm" id="print-name"></td>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left w-24">性別 / 年齢</th>
+            <td class="border border-slate-400 p-2" id="print-gender-age"></td>
+          </tr>
+          <tr>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">要介護度</th>
+            <td class="border border-slate-400 p-2 font-bold text-emerald-800" id="print-care"></td>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">認知症自立度</th>
+            <td class="border border-slate-400 p-2" id="print-dementia"></td>
+          </tr>
+          <tr>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">現在居場所</th>
+            <td class="border border-slate-400 p-2" id="print-location"></td>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">担当ケアマネ</th>
+            <td class="border border-slate-400 p-2 font-bold text-indigo-900" id="print-care-manager"></td>
+          </tr>
+          <tr>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">身元引受人</th>
+            <td class="border border-slate-400 p-2" id="print-keyperson" colspan="3"></td>
+          </tr>
+          <tr>
+            <th class="border border-slate-400 bg-slate-100 p-2 text-left">医療処置</th>
+            <td class="border border-slate-400 p-2" id="print-medical" colspan="3"></td>
+          </tr>
+        </table>
+
+        <!-- ADL状況テーブル -->
+        <table class="w-full border-collapse border border-slate-400 mb-3 text-xs text-center">
+          <tr class="bg-slate-100 font-bold">
+            <th class="border border-slate-400 p-1.5">移動・歩行</th>
+            <th class="border border-slate-400 p-1.5">食事摂取</th>
+            <th class="border border-slate-400 p-1.5">排泄介助</th>
+            <th class="border border-slate-400 p-1.5">入浴介助</th>
+          </tr>
+          <tr>
+            <td class="border border-slate-400 p-2" id="print-adl-walk"></td>
+            <td class="border border-slate-400 p-2" id="print-adl-eat"></td>
+            <td class="border border-slate-400 p-2" id="print-adl-toilet"></td>
+            <td class="border border-slate-400 p-2" id="print-adl-bath"></td>
+          </tr>
+        </table>
+
+        <div class="border border-slate-400 p-3 mb-3 bg-slate-50/50">
+          <h4 class="font-bold text-slate-800 mb-1">【面談・実調 特記事項】</h4>
+          <p id="print-notes" class="whitespace-pre-wrap leading-relaxed"></p>
+        </div>
+
+        <!-- 判定結果記入枠 -->
+        <div class="border-2 border-slate-800 p-3">
+          <div class="font-bold text-slate-900 mb-2">【判定会議 結果記入欄】</div>
+          <div class="flex space-x-6 mb-3">
+            <span>判定結果: □ 受入可　　□ 条件付き受入　　□ 受入困難</span>
+          </div>
+          <div class="text-[11px] text-slate-500">判定会コメント・受入条件:</div>
+          <div class="h-16 border-b border-dashed border-slate-300"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== GAS連携設定モーダル ===== -->
   <div id="modal-gas-settings" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-3">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
@@ -2958,81 +3051,99 @@
 
     function handleCreateApplicant(e) {
       e.preventDefault();
-      const newId = `APP-2026-${String(applicants.length + 1).padStart(3, '0')}`;
-      const medStr = document.getElementById('new-medical').value;
+      try {
+        const getVal = (id, def = '') => {
+          const el = document.getElementById(id);
+          return el ? el.value.trim() : def;
+        };
 
-      const birthVal = document.getElementById('new-birth-date').value;
-      const ageVal = parseInt(document.getElementById('new-age').value, 10);
-      const calculatedAge = !isNaN(ageVal) ? ageVal : (calculateAgeFromBirthDate(birthVal) || 80);
+        const newId = `APP-2026-${String(applicants.length + 1).padStart(3, '0')}`;
+        const medStr = getVal('new-medical');
+        const birthVal = getVal('new-birth-date');
+        const ageVal = parseInt(getVal('new-age'), 10);
+        const calculatedAge = !isNaN(ageVal) ? ageVal : (calculateAgeFromBirthDate(birthVal) || 80);
+        const careMgr = getVal('new-care-manager');
+        const src = getVal('new-source', '病院MSW');
 
-      const newApp = {
-        id: newId,
-        name: document.getElementById('new-name').value,
-        kana: document.getElementById('new-kana').value || document.getElementById('new-name').value,
-        gender: document.getElementById('new-gender').value,
-        birthDate: birthVal || '',
-        age: calculatedAge,
-        careLevel: document.getElementById('new-care').value,
-        dementiaLevel: document.getElementById('new-dementia').value,
-        currentLocation: document.getElementById('new-location').value || '自宅',
-        status: document.getElementById('new-status').value,
-        urgency: document.getElementById('new-urgency').value,
-        careManager: document.getElementById('new-care-manager').value.trim(),
-        assignedStaff: document.getElementById('new-care-manager').value.trim() || '相談員',
-        source: document.getElementById('new-source').value,
-        sourcePhone: document.getElementById('new-source-phone').value.trim(),
-        sourceDetail: document.getElementById('new-source-detail').value.trim(),
-        medicalNeeds: medStr ? medStr.split(',').map(s => s.trim()).filter(Boolean) : [],
-        adlSummary: { walking: '要確認', eating: '自立', toilet: '一部介助', bath: '見守り' },
-        keyPerson: {
-          name: document.getElementById('new-kp-name').value,
-          relation: document.getElementById('new-kp-relation').value,
-          phone: document.getElementById('new-kp-phone').value
-        },
-        notes: document.getElementById('new-notes').value,
-        logs: [
-          {
-            id: Date.now(),
-            date: new Date().toISOString().slice(0, 10),
-            staff: document.getElementById('new-staff').value,
-            type: '新規受付',
-            content: `【${document.getElementById('new-source').value}】より相談受付・カルテ作成`
-          }
-        ]
-      };
+        const newApp = {
+          id: newId,
+          name: getVal('new-name', '無名'),
+          kana: getVal('new-kana') || getVal('new-name', '無名'),
+          gender: getVal('new-gender', '女性'),
+          birthDate: birthVal,
+          age: calculatedAge,
+          careLevel: getVal('new-care', '要介護3'),
+          dementiaLevel: getVal('new-dementia', 'I'),
+          currentLocation: getVal('new-location') || '自宅',
+          status: getVal('new-status', 'inquiry'),
+          urgency: getVal('new-urgency', 'medium'),
+          careManager: careMgr,
+          assignedStaff: careMgr || '相談員',
+          source: src,
+          sourcePhone: getVal('new-source-phone'),
+          sourceDetail: getVal('new-source-detail'),
+          medicalNeeds: medStr ? medStr.split(',').map(s => s.trim()).filter(Boolean) : [],
+          adlSummary: { walking: '要確認', eating: '自立', toilet: '一部介助', bath: '見守り' },
+          keyPerson: {
+            name: getVal('new-kp-name'),
+            relation: getVal('new-kp-relation', '長男'),
+            phone: getVal('new-kp-phone')
+          },
+          notes: getVal('new-notes'),
+          logs: [
+            {
+              id: Date.now(),
+              date: new Date().toISOString().slice(0, 10),
+              staff: careMgr || '相談員',
+              type: '新規受付',
+              content: `【${src}】より相談受付・カルテ作成`
+            }
+          ]
+        };
 
-      applicants.unshift(newApp);
-      closeNewModal();
-      renderAll();
-      persistData();
-      showToast(`「${newApp.name}様」のカルテを登録しました`);
-      openDetailModal(newApp.id);
+        applicants.unshift(newApp);
+        closeNewModal();
+        renderAll();
+        persistData();
+        showToast(`「${newApp.name}様」のカルテを登録・保存しました！`);
+        openDetailModal(newApp.id);
+      } catch (err) {
+        console.error('Failed to create applicant:', err);
+        alert('登録処理中にエラーが発生しました: ' + err.message);
+      }
     }
 
-    function openPrintModal(id) {
+        function openPrintModal(id) {
       const app = applicants.find(a => a.id === id);
       if (!app) return;
 
-      document.getElementById('print-name').innerText = `${app.name} (${app.kana})`;
-      const printBirth = app.birthDate ? ` (${formatJapaneseEra(app.birthDate)})` : '';
-      document.getElementById('print-gender-age').innerText = `${app.gender} / ${app.age}歳${printBirth}`;
-      document.getElementById('print-care').innerText = app.careLevel;
-      document.getElementById('print-dementia').innerText = app.dementiaLevel;
-      document.getElementById('print-location').innerText = app.currentLocation;
-      document.getElementById('print-desired-room').innerText = app.desiredRoomType;
-      document.getElementById('print-keyperson').innerText = `${app.keyPerson?.name || '-'} 様（続柄: ${app.keyPerson?.relation || '-'}） TEL: ${app.keyPerson?.phone || '-'}`;
-      document.getElementById('print-medical').innerText = app.medicalNeeds?.join('、 ') || '特になし';
-      document.getElementById('print-adl-walk').innerText = app.adlSummary?.walking || '-';
-      document.getElementById('print-adl-eat').innerText = app.adlSummary?.eating || '-';
-      document.getElementById('print-adl-toilet').innerText = app.adlSummary?.toilet || '-';
-      document.getElementById('print-adl-bath').innerText = app.adlSummary?.bath || '-';
-      document.getElementById('print-notes').innerText = app.notes || '特記事項なし';
-      document.getElementById('print-date').innerText = `作成日: ${new Date().toISOString().slice(0, 10)}`;
-      document.getElementById('print-staff').innerText = `担当: ${app.assignedStaff}`;
+      const setEl = (elemId, text) => {
+        const el = document.getElementById(elemId);
+        if (el) el.innerText = text;
+      };
 
-      document.getElementById('modal-print').classList.remove('hidden');
-      document.getElementById('modal-print').classList.add('flex');
-      lucide.createIcons();
+      setEl('print-name', `${app.name} (${app.kana || ''})`);
+      const printBirth = app.birthDate ? ` (${formatJapaneseEra(app.birthDate)})` : '';
+      setEl('print-gender-age', `${app.gender || '-'} / ${app.age || '-'}歳${printBirth}`);
+      setEl('print-care', app.careLevel || '-');
+      setEl('print-dementia', app.dementiaLevel || '-');
+      setEl('print-location', app.currentLocation || '-');
+      setEl('print-care-manager', app.careManager || app.assignedStaff || '未定');
+      setEl('print-keyperson', `${app.keyPerson?.name || '-'} 様（続柄: ${app.keyPerson?.relation || '-'}） TEL: ${app.keyPerson?.phone || '-'}`);
+      setEl('print-medical', app.medicalNeeds?.join('、 ') || '特になし');
+      setEl('print-adl-walk', app.adlSummary?.walking || '-');
+      setEl('print-adl-eat', app.adlSummary?.eating || '-');
+      setEl('print-adl-toilet', app.adlSummary?.toilet || '-');
+      setEl('print-adl-bath', app.adlSummary?.bath || '-');
+      setEl('print-notes', app.notes || '特記事項なし');
+      setEl('print-date', `作成日: ${new Date().toISOString().slice(0, 10)}`);
+
+      const modal = document.getElementById('modal-print');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        lucide.createIcons();
+      }
     }
 
     function openPrintModalCurrent() {
@@ -3040,8 +3151,11 @@
     }
 
     function closePrintModal() {
-      document.getElementById('modal-print').classList.add('hidden');
-      document.getElementById('modal-print').classList.remove('flex');
+      const modal = document.getElementById('modal-print');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     function showToast(msg) {

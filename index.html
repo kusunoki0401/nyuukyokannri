@@ -860,12 +860,12 @@
               <option value="契約">契約関連</option>
               <option value="連絡">病院・CM連携</option>
             </select>
-            <select id="new-log-staff" class="px-2 py-1 border border-slate-300 rounded bg-white font-medium text-xs">
-              <option value="高橋">担当: 高橋</option>
-              <option value="佐藤">担当: 佐藤</option>
-              <option value="施設長">施設長</option>
-              <option value="看護師長">看護師長</option>
-            </select>
+            <input
+              type="text"
+              id="new-log-staff"
+              placeholder="担当者名(直接入力)"
+              class="w-32 px-2 py-1 border border-slate-300 rounded text-xs bg-white font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            />
             <input
               type="text"
               id="new-log-text"
@@ -2925,6 +2925,15 @@
 
       renderDetailLogs(app);
 
+      // 前回の担当者名を自動セット
+      const staffInput = document.getElementById('new-log-staff');
+      if (staffInput) {
+        try {
+          const lastStaff = localStorage.getItem('carebridge_last_log_staff');
+          if (lastStaff) staffInput.value = lastStaff;
+        } catch(e){}
+      }
+
       document.getElementById('modal-detail').classList.remove('hidden');
       document.getElementById('modal-detail').classList.add('flex');
       lucide.createIcons();
@@ -2976,11 +2985,15 @@
       if (!currentSelectedId) return;
       const text = document.getElementById('new-log-text').value.trim();
       const type = document.getElementById('new-log-type').value;
-      const staff = document.getElementById('new-log-staff').value;
+      const staffInput = document.getElementById('new-log-staff');
+      const staff = (staffInput ? staffInput.value.trim() : '') || '担当者';
 
       if (!text) return;
       const app = applicants.find(a => a.id === currentSelectedId);
       if (app) {
+        // 次回入力がラクになるよう担当者名を保存
+        try { localStorage.setItem('carebridge_last_log_staff', staff); } catch(e){}
+
         app.logs.unshift({
           id: Date.now(),
           date: new Date().toISOString().slice(0, 10),
@@ -2992,7 +3005,6 @@
         renderDetailLogs(app);
         showToast('対応履歴を記録しました');
         persistData();
-      persistData();
       }
     }
 

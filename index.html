@@ -784,25 +784,25 @@
                 <p class="font-semibold text-slate-800" id="detail-location">-</p>
               </div>
               <div>
+                <span class="text-slate-400">担当ケアマネ:</span>
+                <p class="font-bold text-indigo-900" id="detail-care-manager">-</p>
+              </div>
+              <div>
                 <span class="text-slate-400">紹介ルート:</span>
                 <p class="font-semibold text-slate-800" id="detail-source">-</p>
               </div>
+              <div>
+                <span class="text-slate-400">紹介元TEL:</span>
+                <p class="font-mono font-bold text-slate-800" id="detail-source-phone">-</p>
+              </div>
               <div class="col-span-2">
-                <span class="text-slate-400">紹介元詳細:</span>
+                <span class="text-slate-400">紹介元機関・担当者:</span>
                 <p class="font-semibold text-slate-800" id="detail-source-detail">-</p>
               </div>
               <div class="col-span-2 pt-1.5 border-t border-slate-100">
-                <span class="text-slate-400">身元引受人:</span>
+                <span class="text-slate-400">身元引受人（キーパーソン）:</span>
                 <p class="font-bold text-slate-900" id="detail-keyperson">-</p>
-                <p class="text-slate-600 mt-0.5" id="detail-phone">-</p>
-              </div>
-              <div>
-                <span class="text-slate-400">希望部屋:</span>
-                <p class="font-semibold text-slate-800" id="detail-desired-room">-</p>
-              </div>
-              <div>
-                <span class="text-slate-400">月額予算:</span>
-                <p class="font-semibold text-slate-800" id="detail-budget">-</p>
+                <p class="text-slate-600 font-mono mt-0.5" id="detail-phone">-</p>
               </div>
             </div>
           </div>
@@ -996,45 +996,37 @@
           </div>
         </div>
 
-        <!-- 受付・担当・希望 -->
+        <!-- 紹介元・担当ケアマネ -->
         <div class="space-y-2.5 pt-2 border-t border-slate-200">
           <h4 class="font-bold text-slate-700 uppercase tracking-wider text-xs border-b border-slate-200 pb-1 flex items-center">
-            <i data-lucide="clipboard" class="w-3.5 h-3.5 mr-1 text-indigo-600"></i> 紹介元・担当・希望
+            <i data-lucide="share-2" class="w-3.5 h-3.5 mr-1 text-indigo-600"></i> 紹介元 ＆ 担当ケアマネジャー
           </h4>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label class="block text-slate-700 font-bold mb-1">紹介ルート</label>
-              <select id="edit-app-source" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white">
+              <label class="block text-slate-700 font-bold mb-1">紹介ルート種別</label>
+              <select id="edit-app-source" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-medium">
                 <option value="病院MSW">病院MSW（退院支援）</option>
                 <option value="居宅ケアマネ">居宅ケアマネジャー</option>
                 <option value="地域包括支援センター">地域包括支援センター</option>
                 <option value="老健相談員">老健相談員</option>
                 <option value="Web問い合わせ">公式HP・Web</option>
                 <option value="知人紹介">知人・既存入居者紹介</option>
+                <option value="直接相談">直接来所・電話</option>
               </select>
             </div>
             <div>
-              <label class="block text-slate-700 font-bold mb-1">紹介元機関・担当者名</label>
-              <input type="text" id="edit-app-source-detail" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
-            </div>
-            <div>
-              <label class="block text-slate-700 font-bold mb-1">担当相談員</label>
-              <select id="edit-app-staff" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white">
-                <option value="高橋 相談員">高橋 相談員</option>
-                <option value="佐藤 相談員">佐藤 相談員</option>
-                <option value="施設長">施設長</option>
-                <option value="介護主任">介護主任</option>
-              </select>
+              <label class="block text-slate-700 font-bold mb-1">紹介ルートの電話番号</label>
+              <input type="tel" id="edit-app-source-phone" placeholder="例: 03-1234-5678" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono font-bold text-slate-800" />
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label class="block text-slate-700 font-bold mb-1">希望居室タイプ</label>
-              <input type="text" id="edit-app-desired-room" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+              <label class="block text-slate-700 font-bold mb-1">紹介元機関名・部署</label>
+              <input type="text" id="edit-app-source-detail" placeholder="例: ○○総合病院 地域医療連携室" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
             </div>
             <div>
-              <label class="block text-slate-700 font-bold mb-1">月額予算目安</label>
-              <input type="text" id="edit-app-budget" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+              <label class="block text-slate-700 font-bold mb-1">担当ケアマネジャー <span class="text-[10px] text-indigo-600 font-normal">（直接手入力）</span></label>
+              <input type="text" id="edit-app-care-manager" placeholder="例: ひまわり居宅 田中ケアマネ" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-bold text-slate-900 bg-white" />
             </div>
           </div>
         </div>
@@ -1107,21 +1099,22 @@
     </div>
   </div>
 
-  <!-- ===== 新規相談登録モーダル ===== -->
+    <!-- ===== 新規相談登録モーダル ===== -->
   <div id="modal-new" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-slate-200">
       <div class="px-5 py-3.5 bg-emerald-700 text-white flex items-center justify-between flex-shrink-0">
         <h3 class="text-base font-bold flex items-center">
-          <i data-lucide="plus" class="w-4 h-4 mr-1.5"></i>
+          <i data-lucide="plus-circle" class="w-5 h-5 mr-2 text-emerald-200"></i>
           新規 入居相談・申込カルテ登録
         </h3>
-        <button onclick="closeNewModal()" class="text-emerald-100 hover:text-white">
+        <button type="button" onclick="closeNewModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg transition-colors">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <form id="form-new-applicant" onsubmit="handleCreateApplicant(event)" class="flex-1 overflow-y-auto p-5 space-y-3.5 custom-scrollbar text-xs">
-                <div class="space-y-2.5">
+      <form id="form-new-applicant" onsubmit="handleCreateApplicant(event)" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar text-xs">
+        <!-- 1. ご本人基本情報 -->
+        <div class="space-y-2.5">
           <h4 class="font-bold text-slate-700 uppercase tracking-wider text-xs border-b border-slate-200 pb-1 flex items-center">
             <i data-lucide="user" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i> ご本人基本情報
           </h4>
@@ -1174,11 +1167,157 @@
               </div>
             </div>
           </div>
+
+          <!-- 介護度・認知度・居場所 -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">要介護度</label>
+              <select id="new-care" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-bold text-emerald-800">
+                <option value="自立">自立</option>
+                <option value="要支援1">要支援1</option>
+                <option value="要支援2">要支援2</option>
+                <option value="要介護1">要介護1</option>
+                <option value="要介護2">要介護2</option>
+                <option value="要介護3" selected>要介護3</option>
+                <option value="要介護4">要介護4</option>
+                <option value="要介護5">要介護5</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">認知症自立度</label>
+              <select id="new-dementia" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white">
+                <option value="自立">自立</option>
+                <option value="I" selected>I (ほぼ自立)</option>
+                <option value="IIa">IIa (家庭外で支障)</option>
+                <option value="IIb">IIb (家庭内でも支障)</option>
+                <option value="IIIa">IIIa (日中介助必要)</option>
+                <option value="IIIb">IIIb (夜間介助必要)</option>
+                <option value="IV">IV (常時介助必要)</option>
+                <option value="M">M (専門医療必要)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">現在の居場所 <span class="text-slate-400 font-normal">(自宅/病院等)</span></label>
+              <input type="text" id="new-location" placeholder="例: 自宅 / ○○総合病院" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+            </div>
+          </div>
         </div>
+
+        <!-- 2. 紹介・担当ケアマネ・進捗情報 -->
+        <div class="space-y-2.5 pt-2.5 border-t border-slate-200">
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider text-xs border-b border-slate-200 pb-1 flex items-center">
+            <i data-lucide="share-2" class="w-3.5 h-3.5 mr-1 text-indigo-600"></i> 紹介元 ＆ 担当ケアマネジャー
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">紹介ルート種別</label>
+              <select id="new-source" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-medium">
+                <option value="病院MSW" selected>病院MSW（退院支援）</option>
+                <option value="居宅ケアマネ">居宅ケアマネジャー</option>
+                <option value="地域包括支援センター">地域包括支援センター</option>
+                <option value="老健相談員">老健相談員</option>
+                <option value="Web問合せ">公式HP・Web問合せ</option>
+                <option value="知人紹介">既存入居者・家族紹介</option>
+                <option value="直接相談">直接来所・電話</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">紹介ルートの電話番号</label>
+              <input type="tel" id="new-source-phone" placeholder="例: 03-1234-5678" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono font-bold text-slate-800" />
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">担当ケアマネ <span class="text-[10px] text-indigo-600 font-normal">(手入力)</span></label>
+              <input type="text" id="new-care-manager" placeholder="例: ひまわり居宅 田中ケアマネ" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-bold text-slate-900 bg-white" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 font-bold mb-1">紹介元機関名・担当部署</label>
+              <input type="text" id="new-source-detail" placeholder="例: みどり総合病院 地域連携室" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">緊急度</label>
+              <select id="new-urgency" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-bold">
+                <option value="high">高（至急・退院期限迫る）</option>
+                <option value="medium" selected>標準（1〜2ヶ月以内）</option>
+                <option value="low">低（情報収集・将来の備え）</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">初期進捗ステータス</label>
+            <select id="new-status" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white font-bold text-slate-800">
+              <option value="inquiry" selected>1. 問い合わせ・相談受付</option>
+              <option value="tour">2. 見学予約・実施</option>
+              <option value="application">3. 入居申込受付</option>
+              <option value="assessment">4. 実態調査（訪問面談）</option>
+              <option value="review">5. 入居判定会議</option>
+              <option value="contract">6. 契約手続き</option>
+              <option value="waiting">待機者（空室待ち）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3. 身元引受人（キーパーソン）情報 -->
+        <div class="space-y-2.5 pt-2.5 border-t border-slate-200">
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider text-xs border-b border-slate-200 pb-1 flex items-center">
+            <i data-lucide="users" class="w-3.5 h-3.5 mr-1 text-teal-600"></i> 身元引受人（キーパーソン）
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">氏名</label>
+              <input type="text" id="new-kp-name" placeholder="例: 佐藤 太郎" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">続柄</label>
+              <input type="text" id="new-kp-relation" value="長男" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">連絡先電話番号</label>
+              <input type="tel" id="new-kp-phone" placeholder="例: 090-1234-5678" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. 医療処置ニーズ ＆ 面談特記 -->
+        <div class="space-y-2.5 pt-2.5 border-t border-slate-200">
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider text-xs border-b border-slate-200 pb-1 flex items-center">
+            <i data-lucide="heart-pulse" class="w-3.5 h-3.5 mr-1 text-rose-600"></i> 医療処置 ＆ 特記事項
+          </h4>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">医療処置・管理ニーズ <span class="text-slate-400 font-normal">（カンマ区切り）</span></label>
+            <input type="text" id="new-medical" placeholder="例: インスリン, 酸素吸入, 胃ろう, 褥瘡処置, 車椅子" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg" />
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">特記事項・家庭事情・面談メモ</label>
+            <textarea id="new-notes" rows="3" placeholder="現在の生活状況、ご家族の意向、退院期日、注意すべき点など" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs leading-relaxed"></textarea>
+          </div>
+        </div>
+
+        <!-- ボタン領域（常時視認しやすいフッター） -->
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-between bg-slate-50 -mx-5 -mb-5 px-5 py-3">
+          <button 
+            type="button" 
+            onclick="closeNewModal()" 
+            class="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-white transition-colors shadow-xs"
+          >
+            キャンセル
+          </button>
+          <button 
+            type="submit" 
+            id="btn-save-new-applicant"
+            class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-xl shadow-md hover:shadow-lg transition-all flex items-center"
+          >
+            <i data-lucide="check" class="w-4 h-4 mr-1.5"></i>
+            新規カルテを登録して保存する
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
-  
   <!-- ===== GAS連携設定モーダル ===== -->
   <div id="modal-gas-settings" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-3">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
@@ -1508,69 +1647,330 @@
       }
     }
 
-    // --- 介護付き有料老人ホームくすの木 居室データ（2F:20室, 3F:20室 = 計40室） ---
+            // --- 介護付き有料老人ホームくすの木 居室実データ（全40室: 入居34室 / 空室6室） ---
     function createInitialKusunokiRooms() {
-      const initialRooms = [];
-      const residentNames = [
-        '木村 トシ (要介護3)', '松本 勇 (要介護4)', '', '高木 正 (要介護2)', '岡田 スミ (要介護1)',
-        '井上 ハルエ (要介護4)', '鈴木 一郎 (退去予定: 9/10)', '加藤 芳男 (要介護3)', '吉田 チヨ (要介護2)', '野村 幸一 (要介護4)',
-        '三浦 敏子 (要介護3)', '小野 栄次 (要介護5)', '遠藤 マツ (要介護2)', '青木 昭 (要介護3)', '斎藤 喜代 (要介護4)',
-        '長谷川 操 (要介護1)', '清水 正二 (要介護3)', '坂本 テル (要介護2)', '安藤 貞夫 (要介護4)', '宮本 ユキ (要介護3)',
-        '森田 勉 (要介護2)', '阿部 静子 (要介護1)', '', '渡辺 健蔵 様 (9/5入居確定)', '工藤 保 (要介護2)',
-        '石井 貞子 (要介護3)', '千葉 正雄 (要介護1)', '岩崎 妙子 (要介護2)', '大野 重蔵 (要介護3)', '橋本 フミ (要介護2)',
-        '平野 敏雄 (要介護1)', '松田 キヌ (要介護4)', '市川 茂 (要介護2)', '内田 カズ (要介護3)', '西村 俊一 (要介護2)',
-        '藤田 邦子 (要介護1)', '金子 武 (要介護2)', '', '原田 登 (要介護3)', '小池 敏江 (要介護2)'
-      ];
-
-      let nameIndex = 0;
-      const floors = [2, 3];
-
-      floors.forEach(floor => {
-        for (let i = 1; i <= 25; i++) {
-          if (i % 10 === 4 || i % 10 === 9) continue;
-
-          const roomNo = `${floor}${String(i).padStart(2, '0')}`;
-          let status = 'occupied';
-          let resident = residentNames[nameIndex] || `入居者様 (要介護${(i % 3) + 1})`;
-          let notice = floor === 2 ? '介護対応フロア' : '南向き・見晴らし良好';
-
-          if (roomNo === '203') {
-            status = 'vacant';
-            resident = '';
-            notice = '★ 即時入居可能（清掃済）';
-          } else if (roomNo === '208') {
-            status = 'leaving_soon';
-            resident = '鈴木 一郎 (退去予定: 9/10)';
-            notice = '9/10退去予定・9/17受入可能';
-          } else if (roomNo === '303') {
-            status = 'vacant';
-            resident = '';
-            notice = '★ 即時入居可能（洗面付）';
-          } else if (roomNo === '310') {
-            status = 'reserved';
-            resident = '渡辺 健蔵 様 (9/5入居確定)';
-            notice = '契約締結済・準備中';
-          } else if (roomNo === '325') {
-            status = 'vacant';
-            resident = '';
-            notice = '★ 即時入居可能（角部屋）';
-          }
-
-          initialRooms.push({
-            id: roomNo,
-            roomNo: roomNo,
-            floor: floor,
-            type: floor === 2 ? '個室B (介護強化)' : '個室A (一般個室)',
-            status: status,
-            resident: resident,
-            notice: notice
-          });
-
-          nameIndex++;
-        }
-      });
-
-      return initialRooms;
+      return [
+      {
+            "id": "201",
+            "roomNo": "201",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "鈴木喜久子 様",
+            "notice": ""
+      },
+      {
+            "id": "202",
+            "roomNo": "202",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "西田紀子 様",
+            "notice": ""
+      },
+      {
+            "id": "203",
+            "roomNo": "203",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "錦織壽子 様",
+            "notice": ""
+      },
+      {
+            "id": "205",
+            "roomNo": "205",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "佐藤大右 様",
+            "notice": ""
+      },
+      {
+            "id": "206",
+            "roomNo": "206",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "岩本紀子 様",
+            "notice": ""
+      },
+      {
+            "id": "207",
+            "roomNo": "207",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "中平武志 様",
+            "notice": ""
+      },
+      {
+            "id": "208",
+            "roomNo": "208",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "髙澤ツネ子 様",
+            "notice": ""
+      },
+      {
+            "id": "210",
+            "roomNo": "210",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "渡邉恊子 様",
+            "notice": ""
+      },
+      {
+            "id": "211",
+            "roomNo": "211",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "佐久間サト子 様",
+            "notice": ""
+      },
+      {
+            "id": "212",
+            "roomNo": "212",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "門脇詠子 様",
+            "notice": ""
+      },
+      {
+            "id": "213",
+            "roomNo": "213",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "坂本セイ子 様",
+            "notice": ""
+      },
+      {
+            "id": "215",
+            "roomNo": "215",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "青木浩 様",
+            "notice": ""
+      },
+      {
+            "id": "216",
+            "roomNo": "216",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "佐藤郷 様",
+            "notice": ""
+      },
+      {
+            "id": "217",
+            "roomNo": "217",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "緑川邦子 様",
+            "notice": ""
+      },
+      {
+            "id": "218",
+            "roomNo": "218",
+            "floor": 2,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "220",
+            "roomNo": "220",
+            "floor": 2,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "221",
+            "roomNo": "221",
+            "floor": 2,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "222",
+            "roomNo": "222",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "吉田孝子 様",
+            "notice": ""
+      },
+      {
+            "id": "223",
+            "roomNo": "223",
+            "floor": 2,
+            "status": "occupied",
+            "resident": "吉田友子 様",
+            "notice": ""
+      },
+      {
+            "id": "225",
+            "roomNo": "225",
+            "floor": 2,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "301",
+            "roomNo": "301",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "桝井てる 様",
+            "notice": ""
+      },
+      {
+            "id": "302",
+            "roomNo": "302",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "上野利茂 様",
+            "notice": ""
+      },
+      {
+            "id": "303",
+            "roomNo": "303",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "千代住初枝 様",
+            "notice": ""
+      },
+      {
+            "id": "305",
+            "roomNo": "305",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "加藤拓男 様",
+            "notice": ""
+      },
+      {
+            "id": "306",
+            "roomNo": "306",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "目黒輝子 様",
+            "notice": ""
+      },
+      {
+            "id": "307",
+            "roomNo": "307",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "小野マサ 様",
+            "notice": ""
+      },
+      {
+            "id": "308",
+            "roomNo": "308",
+            "floor": 3,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "310",
+            "roomNo": "310",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "林光夫 様",
+            "notice": ""
+      },
+      {
+            "id": "311",
+            "roomNo": "311",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "安西優美子 様",
+            "notice": ""
+      },
+      {
+            "id": "312",
+            "roomNo": "312",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "森恵子 様",
+            "notice": ""
+      },
+      {
+            "id": "313",
+            "roomNo": "313",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "髙木周 様",
+            "notice": ""
+      },
+      {
+            "id": "315",
+            "roomNo": "315",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "赤津和子 様",
+            "notice": ""
+      },
+      {
+            "id": "316",
+            "roomNo": "316",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "長澤映子 様",
+            "notice": ""
+      },
+      {
+            "id": "317",
+            "roomNo": "317",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "三浦洋子 様",
+            "notice": ""
+      },
+      {
+            "id": "318",
+            "roomNo": "318",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "吉田恭子 様",
+            "notice": ""
+      },
+      {
+            "id": "320",
+            "roomNo": "320",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "紺野秀夫 様",
+            "notice": ""
+      },
+      {
+            "id": "321",
+            "roomNo": "321",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "安西久 様",
+            "notice": ""
+      },
+      {
+            "id": "322",
+            "roomNo": "322",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "木田フミ 様",
+            "notice": ""
+      },
+      {
+            "id": "323",
+            "roomNo": "323",
+            "floor": 3,
+            "status": "vacant",
+            "resident": "",
+            "notice": "★ 即時入居可能"
+      },
+      {
+            "id": "325",
+            "roomNo": "325",
+            "floor": 3,
+            "status": "occupied",
+            "resident": "横山元雄 様",
+            "notice": ""
+      }
+];
     }
 
     let rooms = createInitialKusunokiRooms();
@@ -1580,13 +1980,22 @@
     let currentRoomStatusFilter = 'vacant_and_leaving';
 
     // --- 初期ロード ---
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 埋め込みURLをLocalStorageにも確実に固定
+      if (!localStorage.getItem(STORAGE_KEY_GAS_URL)) {
+        localStorage.setItem(STORAGE_KEY_GAS_URL, DEFAULT_GAS_URL);
+      }
+      if (!localStorage.getItem(STORAGE_KEY_AUTO_SYNC)) {
+        localStorage.setItem(STORAGE_KEY_AUTO_SYNC, 'true');
+      }
+
       loadInitialDataFromStorage();
       renderAll();
       lucide.createIcons();
-      // GAS URLがあれば自動で最新取得を試行（バックグラウンド）
+
+      // 埋め込み済みのGASから最新実データを即座に同期
       if (gasWebappUrl) {
-        loadFromGas(true);
+        await loadFromGas(true);
       }
     });
 
@@ -1806,7 +2215,8 @@
           </td>
           <td class="px-3.5 py-3">
             <div class="text-xs font-bold text-slate-800">${app.source}</div>
-            <div class="text-xs text-slate-500 font-medium">${app.assignedStaff || '-'}</div>
+            <div class="text-xs text-indigo-700 font-bold mt-0.5">${app.careManager ? 'CM: ' + app.careManager : (app.assignedStaff ? 'CM: ' + app.assignedStaff : '-')}</div>
+            ${app.sourcePhone ? `<div class="text-[11px] text-slate-500 font-mono">TEL: ${app.sourcePhone}</div>` : ''}
           </td>
           <td class="px-3.5 py-3">
             <div class="text-xs font-bold text-slate-800">${app.keyPerson?.name || '-'} <span class="text-[11px] text-slate-500 font-normal">(${app.keyPerson?.relation || '-'})</span></div>
@@ -1874,9 +2284,9 @@
                 ${careBadge}
               </div>
               <div class="mt-1.5 flex flex-wrap gap-2.5 text-xs text-slate-600 font-medium">
-                <span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">希望: <strong class="text-slate-800">${app.desiredRoomType || '指定なし'}</strong></span>
                 <span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">現居: <strong class="text-slate-800">${app.currentLocation || '-'}</strong></span>
-                <span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">予算: <strong class="text-slate-800">${app.budgetMonthly || '-'}</strong></span>
+                <span class="bg-indigo-50 text-indigo-900 px-2 py-0.5 rounded border border-indigo-200">担当CM: <strong class="text-indigo-950">${app.careManager || app.assignedStaff || '未定'}</strong></span>
+                ${app.sourcePhone ? `<span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">紹介TEL: <strong class="font-mono text-slate-800">${app.sourcePhone}</strong></span>` : ''}
               </div>
               ${app.notes ? `
                 <p class="mt-2 text-xs text-slate-700 bg-amber-50/80 p-2 rounded-lg border border-amber-200/80 leading-relaxed font-medium">
@@ -1960,7 +2370,7 @@
             </div>
 
             <div class="text-xs text-slate-500 font-medium mb-1.5">
-              ${room.floor}階 / <strong class="text-slate-700">${room.type ? room.type.split(' ')[0] : '個室'}</strong>
+              <span class="inline-flex items-center bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded text-[11px]">${room.floor}階フロア</span>
             </div>
 
             <div class="min-h-[28px] line-clamp-2 py-0.5">
@@ -2125,7 +2535,8 @@
       const floor = parseInt(document.getElementById('new-room-floor').value, 10) || 2;
       const type = document.getElementById('new-room-type').value.trim() || '個室A';
       const status = document.getElementById('new-room-status').value;
-      const resident = document.getElementById('new-room-resident').value.trim();
+      let resident = document.getElementById('new-room-resident').value.trim();
+      if (resident && !resident.endsWith('様')) resident += ' 様';
       const notice = document.getElementById('new-room-notice').value.trim();
 
       if (rooms.some(r => r.roomNo === roomNo)) {
@@ -2302,10 +2713,9 @@
       document.getElementById('edit-app-dementia').value = app.dementiaLevel || 'I';
       document.getElementById('edit-app-location').value = app.currentLocation || '';
       document.getElementById('edit-app-source').value = app.source || '病院MSW';
+      document.getElementById('edit-app-source-phone').value = app.sourcePhone || '';
       document.getElementById('edit-app-source-detail').value = app.sourceDetail || '';
-      document.getElementById('edit-app-staff').value = app.assignedStaff || '高橋 相談員';
-      document.getElementById('edit-app-desired-room').value = app.desiredRoomType || '';
-      document.getElementById('edit-app-budget').value = app.budgetMonthly || '20万円前後';
+      document.getElementById('edit-app-care-manager').value = app.careManager || app.assignedStaff || '';
       document.getElementById('edit-app-kp-name').value = app.keyPerson?.name || '';
       document.getElementById('edit-app-kp-relation').value = app.keyPerson?.relation || '長男';
       document.getElementById('edit-app-kp-phone').value = app.keyPerson?.phone || '';
@@ -2347,10 +2757,10 @@
       app.dementiaLevel = document.getElementById('edit-app-dementia').value;
       app.currentLocation = document.getElementById('edit-app-location').value.trim();
       app.source = document.getElementById('edit-app-source').value;
+      app.sourcePhone = document.getElementById('edit-app-source-phone').value.trim();
       app.sourceDetail = document.getElementById('edit-app-source-detail').value.trim();
-      app.assignedStaff = document.getElementById('edit-app-staff').value;
-      app.desiredRoomType = document.getElementById('edit-app-desired-room').value.trim();
-      app.budgetMonthly = document.getElementById('edit-app-budget').value.trim();
+      app.careManager = document.getElementById('edit-app-care-manager').value.trim();
+      app.assignedStaff = app.careManager; // 互換性維持
 
       app.keyPerson = {
         name: document.getElementById('edit-app-kp-name').value.trim(),
@@ -2393,13 +2803,13 @@
       badge.innerText = st.label;
 
       document.getElementById('detail-status-select').value = app.status;
-      document.getElementById('detail-location').innerText = app.currentLocation;
-      document.getElementById('detail-source').innerText = app.source;
+      document.getElementById('detail-location').innerText = app.currentLocation || '-';
+      document.getElementById('detail-source').innerText = app.source || '-';
+      document.getElementById('detail-source-phone').innerText = app.sourcePhone ? app.sourcePhone : '未登録';
       document.getElementById('detail-source-detail').innerText = app.sourceDetail || '-';
+      document.getElementById('detail-care-manager').innerText = app.careManager || app.assignedStaff || '未設定';
       document.getElementById('detail-keyperson').innerText = `${app.keyPerson?.name || '-'} 様（${app.keyPerson?.relation || '-'}）`;
       document.getElementById('detail-phone').innerText = `TEL: ${app.keyPerson?.phone || '未登録'}`;
-      document.getElementById('detail-desired-room').innerText = app.desiredRoomType;
-      document.getElementById('detail-budget').innerText = app.budgetMonthly;
 
       const medContainer = document.getElementById('detail-medical-tags');
       medContainer.innerHTML = '';
@@ -2521,11 +2931,11 @@
       setVal('new-dementia', 'I');
       setVal('new-location', '');
       setVal('new-source', '病院MSW');
+      setVal('new-source-phone', '');
       setVal('new-source-detail', '');
+      setVal('new-care-manager', '');
       setVal('new-status', 'inquiry');
       setVal('new-urgency', 'medium');
-      setVal('new-staff', '高橋 相談員');
-      setVal('new-desired-room', '個室A（2F/3F）');
       setVal('new-kp-name', '');
       setVal('new-kp-relation', '長男');
       setVal('new-kp-phone', '');
@@ -2567,11 +2977,11 @@
         currentLocation: document.getElementById('new-location').value || '自宅',
         status: document.getElementById('new-status').value,
         urgency: document.getElementById('new-urgency').value,
-        assignedStaff: document.getElementById('new-staff').value,
+        careManager: document.getElementById('new-care-manager').value.trim(),
+        assignedStaff: document.getElementById('new-care-manager').value.trim() || '相談員',
         source: document.getElementById('new-source').value,
-        sourceDetail: document.getElementById('new-source-detail').value,
-        desiredRoomType: document.getElementById('new-desired-room').value,
-        budgetMonthly: '20万円前後',
+        sourcePhone: document.getElementById('new-source-phone').value.trim(),
+        sourceDetail: document.getElementById('new-source-detail').value.trim(),
         medicalNeeds: medStr ? medStr.split(',').map(s => s.trim()).filter(Boolean) : [],
         adlSummary: { walking: '要確認', eating: '自立', toilet: '一部介助', bath: '見守り' },
         keyPerson: {
@@ -2652,8 +3062,11 @@
     const STORAGE_KEY_AUTO_SYNC = 'carebridge_kusunoki_auto_sync_v1';
     const STORAGE_KEY_LAST_SAVED = 'carebridge_kusunoki_last_saved_v1';
 
-    let gasWebappUrl = localStorage.getItem(STORAGE_KEY_GAS_URL) || '';
-    let isAutoSyncEnabled = localStorage.getItem(STORAGE_KEY_AUTO_SYNC) === 'true';
+    // ユーザー指定のGoogle Apps Script WebアプリURLを標準埋め込み
+    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwETiL-giYe3MLTXGm04zx9BRBIvu0R-UwlruMhsh16FfkCU0WWHbDTZs9BPrgxYJWsEg/exec';
+
+    let gasWebappUrl = localStorage.getItem(STORAGE_KEY_GAS_URL) || DEFAULT_GAS_URL;
+    let isAutoSyncEnabled = localStorage.getItem(STORAGE_KEY_AUTO_SYNC) !== 'false'; // デフォルトで自動同期ON
     let isSaving = false;
 
     // ローカルストレージからの初期読み込み
@@ -2665,7 +3078,6 @@
         try {
           const parsed = JSON.parse(storedApplicants);
           if (Array.isArray(parsed)) {
-            // 空配列 [] であってもそのまま採用（消去した状態を完全に維持）
             applicants = parsed;
           }
         } catch (e) {
@@ -2673,9 +3085,8 @@
           applicants = [];
         }
       } else {
-        // 初回起動時のみデフォルトサンプルを読み込み
-        applicants = JSON.parse(JSON.stringify(DEFAULT_SAMPLE_APPLICANTS));
-        saveToLocalStorage();
+        // GAS URLが埋め込まれている場合はサンプルを勝手に注入せず空で待機（GASから即時ロード）
+        applicants = [];
       }
 
       if (storedRooms !== null) {
@@ -2910,9 +3321,7 @@
           renderAll();
           updateGasStatusUI();
 
-          if (!silent) {
-            showToast(`スプレッドシートからデータを同期しました（${applicants.length}件）`);
-          }
+          showToast(`クラウド同期完了: 検討者 ${applicants.length}名 / 全 ${rooms.length}室`);
         } else {
           if (!silent) showToast(`データ読込エラー: ${data.message || '取得失敗'}`);
         }

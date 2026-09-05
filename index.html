@@ -197,10 +197,10 @@
           <span id="waitlist-badge" class="ml-1.5 bg-orange-500 text-white text-[11px] px-2 py-0.2 rounded-full font-black shadow-xs">0</span>
         </button>
 
-        <!-- 4. 居室管理 (ティール青緑) -->
+        <!-- 4. 居室状況確認 (ティール青緑) -->
         <button onclick="switchTab('rooms')" id="tab-btn-rooms" class="tab-btn flex items-center px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xl transition-all duration-150 bg-teal-50 text-teal-950 hover:bg-teal-100/90 border border-teal-200/90 font-bold shadow-xs">
           <i data-lucide="bed" class="w-4 h-4 mr-1.5 text-teal-600"></i>
-          居室管理 (全40室)
+          居室状況確認（空室・入院等）
         </button>
 
         <!-- 5. 成約統計 (パープル紫) -->
@@ -409,27 +409,32 @@
     <!-- ========================================== -->
     <div id="view-rooms" class="hidden space-y-4 w-full">
       
-      <!-- 稼働統計KPI -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <!-- 稼働統計KPI（入院中も一目で確認） -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[11px] text-slate-500 font-medium">総居室数 (定員)</span>
-          <p class="text-xl font-bold text-slate-900 mt-0.5"><span id="stat-total-rooms">40</span> <span class="text-xs font-normal">室</span></p>
+          <p class="text-xl font-black text-slate-900 mt-0.5"><span id="stat-total-rooms">40</span> <span class="text-xs font-normal">室</span></p>
           <div class="text-[10px] text-slate-500">2F: 20室 / 3F: 20室</div>
         </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[11px] text-slate-500 font-medium">現在入居中 (稼働)</span>
-          <p class="text-xl font-bold text-slate-800 mt-0.5"><span id="stat-occupied-rooms">35</span> <span class="text-xs font-normal">室</span></p>
-          <div class="text-[10px] text-teal-700 font-bold">稼働率: <span id="stat-occupancy-percent">87.5%</span></div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs cursor-pointer hover:border-slate-400 transition-colors" onclick="filterRoomsByStatus('occupied')">
+          <span class="text-[11px] text-slate-500 font-medium">在室入居中</span>
+          <p class="text-xl font-black text-slate-800 mt-0.5"><span id="stat-occupied-rooms">34</span> <span class="text-xs font-normal">室</span></p>
+          <div class="text-[10px] text-teal-700 font-bold">稼働率: <span id="stat-occupancy-percent">85.0%</span></div>
         </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[11px] text-slate-500 font-medium">即時案内可能 空室</span>
-          <p class="text-xl font-bold text-emerald-600 mt-0.5"><span id="stat-vacant-rooms">3</span> <span class="text-xs font-normal">室</span></p>
-          <div class="text-[10px] text-emerald-700">受入打診可能</div>
+        <div class="bg-emerald-50/40 p-3 rounded-xl border-2 border-emerald-500/80 shadow-xs cursor-pointer hover:border-emerald-600 transition-colors" onclick="filterRoomsByStatus('vacant')">
+          <span class="text-[11px] text-emerald-800 font-bold">★ 空室 (即可能)</span>
+          <p class="text-xl font-black text-emerald-600 mt-0.5"><span id="stat-vacant-rooms">6</span> <span class="text-xs font-normal">室</span></p>
+          <div class="text-[10px] text-emerald-700 font-semibold">受入打診可能</div>
         </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[11px] text-slate-500 font-medium">退去・予約確定</span>
-          <p class="text-xl font-bold text-indigo-600 mt-0.5"><span id="stat-other-rooms">2</span> <span class="text-xs font-normal">室</span></p>
-          <div class="text-[10px] text-indigo-600">近日異動あり</div>
+        <div class="bg-blue-50/40 p-3 rounded-xl border-2 border-blue-400 shadow-xs cursor-pointer hover:border-blue-500 transition-colors" onclick="filterRoomsByStatus('hospitalized')">
+          <span class="text-[11px] text-blue-900 font-bold">🏥 入院中</span>
+          <p class="text-xl font-black text-blue-600 mt-0.5"><span id="stat-hospital-rooms">0</span> <span class="text-xs font-normal">名</span></p>
+          <div class="text-[10px] text-blue-700 font-semibold">復帰/受入検討</div>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs cursor-pointer hover:border-slate-400 transition-colors" onclick="filterRoomsByStatus('leaving_soon')">
+          <span class="text-[11px] text-amber-800 font-medium">⚠️ 退去予定・予約</span>
+          <p class="text-xl font-black text-amber-600 mt-0.5"><span id="stat-other-rooms">0</span> <span class="text-xs font-normal">室</span></p>
+          <div class="text-[10px] text-amber-600">近日異動あり</div>
         </div>
       </div>
 
@@ -452,14 +457,15 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
-            <!-- 状態フィルター -->
+            <!-- 状態フィルター（★空室・入院中・退去予定） -->
             <select id="room-status-filter" onchange="handleRoomFilters()" class="text-xs px-2.5 py-1.5 border-2 border-teal-500 rounded-lg bg-teal-50 font-bold text-teal-900 shadow-xs">
-              <option value="vacant_and_leaving" selected>★ 空室 ＆ 退去予定のみ（初期表示）</option>
+              <option value="vacant_hospital_leaving" selected>★ 空室・入院中・退去予定（初期表示）</option>
               <option value="all">すべての居室 (全40室)</option>
-              <option value="vacant">空室のみ</option>
-              <option value="leaving_soon">退去予定のみ</option>
-              <option value="occupied">入居中 (稼働中) のみ</option>
-              <option value="reserved">予約・確定のみ</option>
+              <option value="vacant">★ 空室のみ</option>
+              <option value="hospitalized">🏥 入院中のみ</option>
+              <option value="leaving_soon">⚠️ 退去予定のみ</option>
+              <option value="occupied">入居中 (通常在室) のみ</option>
+              <option value="reserved">🔒 予約・確定のみ</option>
             </select>
 
             <!-- フロアフィルター -->
@@ -607,7 +613,6 @@
         <input type="hidden" id="edit-room-id" />
         <input type="hidden" id="edit-room-floor" value="2" />
         <input type="hidden" id="edit-room-type" value="個室" />
-        <input type="hidden" id="edit-room-notice" value="" />
         
         <div class="grid grid-cols-2 gap-3">
           <!-- 部屋番号 -->
@@ -621,10 +626,11 @@
             <label class="block text-slate-700 font-bold mb-1">稼働状況 <span class="text-rose-500">*</span></label>
             <select id="edit-room-status" onchange="handleRoomStatusChangeInModal()" class="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-bold text-teal-900 focus:ring-2 focus:ring-teal-500">
               <option value="vacant">★ 空室 (即時可能)</option>
-              <option value="leaving_soon">退去予定</option>
-              <option value="occupied">入居中 (稼働中)</option>
-              <option value="reserved">予約・入居確定</option>
-              <option value="maintenance">清掃・修繕中</option>
+              <option value="hospitalized">🏥 入院中</option>
+              <option value="leaving_soon">⚠️ 退去予定</option>
+              <option value="occupied">入居中 (通常稼働)</option>
+              <option value="reserved">🔒 予約・入居確定</option>
+              <option value="maintenance">🛠️ 清掃・修繕中</option>
             </select>
           </div>
         </div>
@@ -637,7 +643,20 @@
               申込者一覧から選択
             </button>
           </div>
-          <input type="text" id="edit-room-resident" placeholder="例: 木村 トシ (要介護3)" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-teal-500" />
+          <input type="text" id="edit-room-resident" placeholder="例: 木村 トシ 様" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:ring-2 focus:ring-teal-500" />
+        </div>
+
+        <!-- 備考・特記事項メモ -->
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">
+            備考・特記事項メモ <span class="text-[11px] text-slate-500 font-normal">（入院先・受入条件・退去予定日など）</span>
+          </label>
+          <input 
+            type="text" 
+            id="edit-room-notice" 
+            placeholder="例: ○○病院へ入院中(9/1〜) / 退去予定9/10 / 酸素対応可" 
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-teal-500" 
+          />
         </div>
 
         <div class="pt-3 border-t border-slate-200 flex items-center justify-between">
@@ -2070,7 +2089,7 @@
     let currentSelectedId = null;
     let draggedApplicantId = null;
     let currentFloorFilter = 'all';
-    let currentRoomStatusFilter = 'vacant_and_leaving';
+    let currentRoomStatusFilter = 'vacant_hospital_leaving';
 
     // --- 初期ロード ---
     window.addEventListener('DOMContentLoaded', async () => {
@@ -2401,98 +2420,189 @@
       });
     }
 
-    // --- 居室・ベッドマップ描画（40部屋対応・編集可能） ---
+        // --- 居室カード単体のHTML生成 ---
+    function generateRoomCardHtml(room) {
+      let cardStyle = 'bg-white border-2 border-slate-200 hover:border-slate-400';
+      let badgeHtml = '<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300">入居中</span>';
+      let residentDisplay = `<span class="text-slate-800 font-bold text-sm">${room.resident || '入居者様'}</span>`;
+      let headerColor = 'text-slate-900';
+
+      if (room.status === 'vacant') {
+        cardStyle = 'bg-gradient-to-br from-emerald-50 to-teal-50/60 border-2 border-emerald-500 shadow-sm hover:border-emerald-600 hover:shadow-md';
+        badgeHtml = '<span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs animate-pulse">★ 空室 (即可能)</span>';
+        residentDisplay = '<span class="text-emerald-700 font-black text-sm flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-1 text-emerald-600"></i>即時受入可能</span>';
+        headerColor = 'text-emerald-950';
+      } else if (room.status === 'hospitalized') {
+        cardStyle = 'bg-gradient-to-br from-blue-50 to-indigo-50/60 border-2 border-blue-500 shadow-sm hover:border-blue-600 hover:shadow-md';
+        badgeHtml = '<span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-blue-600 text-white shadow-xs">🏥 入院中</span>';
+        residentDisplay = `<span class="text-blue-950 font-black text-sm">${room.resident || '入院中入居者様'}</span>`;
+        headerColor = 'text-blue-950';
+      } else if (room.status === 'leaving_soon') {
+        cardStyle = 'bg-gradient-to-br from-amber-50 to-orange-50/60 border-2 border-amber-500 shadow-sm hover:border-amber-600 hover:shadow-md';
+        badgeHtml = '<span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-amber-500 text-white shadow-xs">⚠️ 退去予定</span>';
+        residentDisplay = `<span class="text-amber-950 font-bold text-sm">${room.resident || '退去予定あり'}</span>`;
+        headerColor = 'text-amber-950';
+      } else if (room.status === 'reserved') {
+        cardStyle = 'bg-indigo-50/70 border-2 border-indigo-400 hover:border-indigo-600';
+        badgeHtml = '<span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-600 text-white">🔒 入居確定</span>';
+        residentDisplay = `<span class="text-indigo-950 font-bold text-sm">${room.resident || '予約済'}</span>`;
+        headerColor = 'text-indigo-950';
+      } else if (room.status === 'maintenance') {
+        cardStyle = 'bg-purple-50/70 border-2 border-purple-400 hover:border-purple-600';
+        badgeHtml = '<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-600 text-white">🛠️ 清掃・修繕</span>';
+        residentDisplay = '<span class="text-purple-800 font-semibold text-xs">消毒・整備中</span>';
+        headerColor = 'text-purple-950';
+      }
+
+      return `
+        <div onclick="openRoomEditModal('${room.id}')" class="p-3 rounded-2xl cursor-pointer transition-all hover:scale-[1.02] relative group select-none ${cardStyle}">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-base font-black ${headerColor} tracking-tight">${room.roomNo} 号室</span>
+            ${badgeHtml}
+          </div>
+
+          <div class="text-xs text-slate-500 font-medium mb-1.5">
+            <span class="inline-flex items-center bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded text-[11px]">${room.floor}階フロア</span>
+          </div>
+
+          <div class="min-h-[28px] line-clamp-2 py-0.5">
+            ${residentDisplay}
+          </div>
+
+          <div class="mt-2 pt-1.5 border-t border-slate-200/70 flex items-start justify-between text-[11px] bg-slate-50/80 -mx-3 -mb-3 px-3 py-2 rounded-b-2xl min-h-[34px]">
+            <div class="flex-1 min-w-0 pr-1">
+              ${room.notice ? `
+                <p class="text-slate-800 font-medium line-clamp-2 leading-tight" title="${room.notice}">
+                  <span class="text-teal-700 font-bold mr-0.5">備考:</span>${room.notice}
+                </p>
+              ` : `
+                <span class="text-slate-400 italic text-[10.5px]">クリックして備考・状態を編集</span>
+              `}
+            </div>
+            <i data-lucide="edit-2" class="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-600 transition-colors flex-shrink-0 mt-0.5"></i>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- 居室・ベッドマップ描画（空室と入院を分かりやすく分離） ---
     function renderRooms() {
       const container = document.getElementById('rooms-map-container');
       container.innerHTML = '';
 
-      const displayRooms = rooms.filter(r => {
-        const matchFloor = currentFloorFilter === 'all' || String(r.floor) === String(currentFloorFilter);
-        let matchStatus = true;
-        if (currentRoomStatusFilter === 'vacant_and_leaving') {
-          matchStatus = (r.status === 'vacant' || r.status === 'leaving_soon');
-        } else if (currentRoomStatusFilter !== 'all') {
-          matchStatus = (r.status === currentRoomStatusFilter);
-        }
-        return matchFloor && matchStatus;
-      });
+      // フロアフィルター適用
+      const floorFiltered = rooms.filter(r => currentFloorFilter === 'all' || String(r.floor) === String(currentFloorFilter));
 
-      if (displayRooms.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full py-8 text-center text-xs text-slate-400 border-2 border-dashed border-slate-200 rounded-xl">
-            条件に一致する居室はありません
-          </div>
-        `;
-      } else {
-        displayRooms.forEach(room => {
-          let cardStyle = 'bg-white border-2 border-slate-200 hover:border-slate-400';
-          let badgeHtml = '<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300">入居中</span>';
-          let residentDisplay = `<span class="text-slate-800 font-bold text-sm">${room.resident || '入居者様'}</span>`;
-          let headerColor = 'text-slate-900';
+      // 初期表示（vacant_hospital_leaving モード）の場合は、セクションを明確に分けて表示
+      if (currentRoomStatusFilter === 'vacant_hospital_leaving') {
+        const vacantList = floorFiltered.filter(r => r.status === 'vacant');
+        const hospitalList = floorFiltered.filter(r => r.status === 'hospitalized');
+        const leavingList = floorFiltered.filter(r => r.status === 'leaving_soon' || r.status === 'reserved');
 
-          if (room.status === 'vacant') {
-            cardStyle = 'bg-gradient-to-br from-emerald-50 to-teal-50/60 border-2 border-emerald-500 shadow-sm hover:border-emerald-600 hover:shadow-md';
-            badgeHtml = '<span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs animate-pulse">★ 空室 (即可能)</span>';
-            residentDisplay = '<span class="text-emerald-700 font-black text-sm flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-1 text-emerald-600"></i>即時受入可能</span>';
-            headerColor = 'text-emerald-950';
-          } else if (room.status === 'leaving_soon') {
-            cardStyle = 'bg-gradient-to-br from-amber-50 to-orange-50/60 border-2 border-amber-500 shadow-sm hover:border-amber-600 hover:shadow-md';
-            badgeHtml = '<span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-amber-500 text-white shadow-xs">⚠️ 退去予定</span>';
-            residentDisplay = `<span class="text-amber-950 font-bold text-sm">${room.resident || '退去予定あり'}</span>`;
-            headerColor = 'text-amber-950';
-          } else if (room.status === 'reserved') {
-            cardStyle = 'bg-indigo-50/70 border-2 border-indigo-400 hover:border-indigo-600';
-            badgeHtml = '<span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-600 text-white">🔒 入居確定</span>';
-            residentDisplay = `<span class="text-indigo-950 font-bold text-sm">${room.resident || '予約済'}</span>`;
-            headerColor = 'text-indigo-950';
-          } else if (room.status === 'maintenance') {
-            cardStyle = 'bg-purple-50/70 border-2 border-purple-400 hover:border-purple-600';
-            badgeHtml = '<span class="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-600 text-white">🛠️ 清掃・修繕</span>';
-            residentDisplay = '<span class="text-purple-800 font-semibold text-xs">消毒・整備中</span>';
-            headerColor = 'text-purple-950';
-          }
-
-          const card = document.createElement('div');
-          card.className = `p-3 rounded-2xl cursor-pointer transition-all hover:scale-[1.02] relative group select-none ${cardStyle}`;
-          card.onclick = () => openRoomEditModal(room.id);
-          
-          card.innerHTML = `
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-base font-black ${headerColor} tracking-tight">${room.roomNo} 号室</span>
-              ${badgeHtml}
-            </div>
-
-            <div class="text-xs text-slate-500 font-medium mb-1.5">
-              <span class="inline-flex items-center bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded text-[11px]">${room.floor}階フロア</span>
-            </div>
-
-            <div class="min-h-[28px] line-clamp-2 py-0.5">
-              ${residentDisplay}
-            </div>
-
-            <div class="mt-2 pt-1.5 border-t border-slate-200/70 flex items-center justify-between text-[11px] text-slate-400">
-              <span>${room.notice ? room.notice : 'クリックして編集'}</span>
-              <i data-lucide="edit-2" class="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+        if (vacantList.length === 0 && hospitalList.length === 0 && leavingList.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full py-12 text-center text-xs text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50/50 font-medium">
+              現在、空室・入院中・退去予定の居室はありません（全室通常稼働中）
             </div>
           `;
-          container.appendChild(card);
+        } else {
+          let sectionHtml = '<div class="col-span-full space-y-6 w-full">';
+
+          // 1. ★ 空室セクション
+          sectionHtml += `
+            <div>
+              <div class="flex items-center justify-between mb-3 px-1 border-b-2 border-emerald-500 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="p-1.5 bg-emerald-100 text-emerald-800 rounded-lg shadow-xs"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i></span>
+                  <h4 class="font-black text-sm text-emerald-950 tracking-wide">★ 即時受入可能 空室</h4>
+                  <span class="bg-emerald-600 text-white font-black text-xs px-2.5 py-0.5 rounded-full shadow-xs">${vacantList.length} 室</span>
+                </div>
+                <span class="text-xs text-emerald-800 font-bold hidden sm:inline">受入打診・ベッド確保可能</span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5">
+                ${vacantList.length > 0 ? vacantList.map(generateRoomCardHtml).join('') : '<div class="col-span-full text-xs text-slate-400 p-4 border border-dashed border-slate-200 rounded-xl bg-slate-50 text-center">現在、即時可能な空室はありません</div>'}
+              </div>
+            </div>
+          `;
+
+          // 2. 🏥 入院中セクション
+          sectionHtml += `
+            <div>
+              <div class="flex items-center justify-between mb-3 px-1 border-b-2 border-blue-500 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="p-1.5 bg-blue-100 text-blue-800 rounded-lg shadow-xs"><i data-lucide="activity" class="w-4 h-4 text-blue-600"></i></span>
+                  <h4 class="font-black text-sm text-blue-950 tracking-wide">🏥 入院中 居室</h4>
+                  <span class="bg-blue-600 text-white font-black text-xs px-2.5 py-0.5 rounded-full shadow-xs">${hospitalList.length} 名</span>
+                </div>
+                <span class="text-xs text-blue-800 font-bold hidden sm:inline">医療機関入院中（ベッド確保・復帰または受入調整）</span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5">
+                ${hospitalList.length > 0 ? hospitalList.map(generateRoomCardHtml).join('') : '<div class="col-span-full text-xs text-slate-400 p-4 border border-dashed border-slate-200 rounded-xl bg-slate-50 text-center">現在、入院中の方はいません</div>'}
+              </div>
+            </div>
+          `;
+
+          // 3. ⚠️ 退去予定・予約確定（該当がある場合）
+          if (leavingList.length > 0) {
+            sectionHtml += `
+              <div>
+                <div class="flex items-center justify-between mb-3 px-1 border-b-2 border-amber-500 pb-2">
+                  <div class="flex items-center space-x-2">
+                    <span class="p-1.5 bg-amber-100 text-amber-800 rounded-lg shadow-xs"><i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i></span>
+                    <h4 class="font-black text-sm text-amber-950 tracking-wide">⚠️ 退去予定・予約確定</h4>
+                    <span class="bg-amber-500 text-white font-black text-xs px-2.5 py-0.5 rounded-full shadow-xs">${leavingList.length} 室</span>
+                  </div>
+                  <span class="text-xs text-amber-800 font-bold hidden sm:inline">近日異動予定</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5">
+                  ${leavingList.map(generateRoomCardHtml).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          sectionHtml += '</div>';
+          container.innerHTML = sectionHtml;
+        }
+      } else {
+        // 単一フィルターまたは「すべての居室 (全40室)」の場合
+        const displayRooms = floorFiltered.filter(r => {
+          if (currentRoomStatusFilter === 'all') return true;
+          return r.status === currentRoomStatusFilter;
         });
+
+        if (displayRooms.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full py-8 text-center text-xs text-slate-400 border-2 border-dashed border-slate-200 rounded-xl">
+              条件に一致する居室はありません
+            </div>
+          `;
+        } else {
+          container.innerHTML = displayRooms.map(generateRoomCardHtml).join('');
+        }
       }
 
-      // KPI統計再計算
+      // KPI統計再計算（入院中も集計）
       const totalRooms = rooms.length;
       const occupiedRooms = rooms.filter(r => r.status === 'occupied').length;
       const vacantRooms = rooms.filter(r => r.status === 'vacant').length;
+      const hospitalRooms = rooms.filter(r => r.status === 'hospitalized').length;
       const otherRooms = rooms.filter(r => ['reserved', 'leaving_soon', 'maintenance'].includes(r.status)).length;
-      const rate = totalRooms > 0 ? ((occupiedRooms / totalRooms) * 100).toFixed(1) : 0;
+      const rate = totalRooms > 0 ? (((occupiedRooms + hospitalRooms) / totalRooms) * 100).toFixed(1) : 0;
 
-      document.getElementById('stat-total-rooms').innerText = totalRooms;
-      document.getElementById('stat-occupied-rooms').innerText = occupiedRooms;
-      document.getElementById('stat-vacant-rooms').innerText = vacantRooms;
-      document.getElementById('stat-other-rooms').innerText = otherRooms;
-      document.getElementById('stat-occupancy-percent').innerText = `${rate}%`;
-      document.getElementById('header-occupancy-rate').innerText = `${rate}%`;
-      document.getElementById('header-total-capacity').innerText = totalRooms;
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+      };
+
+      setVal('stat-total-rooms', totalRooms);
+      setVal('stat-occupied-rooms', occupiedRooms);
+      setVal('stat-vacant-rooms', vacantRooms);
+      setVal('stat-hospital-rooms', hospitalRooms);
+      setVal('stat-other-rooms', otherRooms);
+      setVal('stat-occupancy-percent', `${rate}%`);
+      setVal('header-occupancy-rate', `${rate}%`);
+      setVal('header-total-capacity', totalRooms);
     }
 
 
